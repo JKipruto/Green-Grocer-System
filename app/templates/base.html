@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}GreenBasket{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar"><a class="brand" href="/"><span class="brand-mark">✳</span> green<span>basket</span></a>
+<nav>
+  <a href="/">Shop</a>
+  {% if user and user.role == 'vendor' %}<a href="/vendor">Vendor dashboard</a>{% endif %}
+  {% if user and user.role == 'customer' %}<a href="/orders">My orders</a>{% endif %}
+  {% if user %}<span class="welcome">Hi, {{ user.name.split(' ')[0] }}</span><form action="/logout" method="post" class="inline"><button class="nav-button">Log out</button></form>
+  {% else %}<a href="/login">Log in</a><a class="nav-cta" href="/register">Create account</a>{% endif %}
+</nav></header>
+<main>{% block content %}{% endblock %}</main>
+<footer><div class="footer-brand">✳ greenbasket</div><p>Good food. Good mood. Grown with care.</p><small>© 2026 GreenBasket · Fresh from local growers</small></footer>
+<script>window.CURRENT_USER = {{ 'true' if user and user.role == 'customer' else 'false' }};</script>
+<script src="/static/app.js"></script>
+{% block scripts %}{% endblock %}
+</body></html>
